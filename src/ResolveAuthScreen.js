@@ -7,9 +7,8 @@ import {TryLocalLogin} from './actions/Auth';
 
 const ResolveAuthScreen = ({TryLocalLogin}) => {
     const navigation = useNavigation();
-
     useEffect(()=>{
-        TryLocalLogin(()=> navigation.navigate('HomeFlow'), () => navigation.navigate('LoginFlow'))
+        TryLocalLogin(() => navigation.navigate('HomeFlow'), () => navigation.navigate('LoginFlow'))
     },[])
 
     return null;
@@ -17,4 +16,10 @@ const ResolveAuthScreen = ({TryLocalLogin}) => {
 
 const styles = StyleSheet.create({})
 
-export default connect(null, {TryLocalLogin})(ResolveAuthScreen);
+const mapStateToProps = (state) => {
+    return {
+        auth:state.auth
+    }
+}
+
+export default connect(mapStateToProps, {TryLocalLogin})(ResolveAuthScreen);

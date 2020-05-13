@@ -4,9 +4,11 @@ import {ListItem, Text, Card} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {getAllProfiles} from '../../actions/profile';
+import {hotelId} from '../../actions/Id';
 
-const Profile = ({getAllProfiles, profile:{profiles , loading}}) => {
-    const navigation = useNavigation()
+
+const Profile = ({getAllProfiles, profile:{profiles , loading}, hotelId}) => {
+    const navigation = useNavigation();
     useEffect(()=>{
         getAllProfiles();
         //backAction function
@@ -40,7 +42,7 @@ const Profile = ({getAllProfiles, profile:{profiles , loading}}) => {
             {
                 profiles.map((profile, index)=>{
                     return (
-                        <TouchableOpacity key={index} onPress={()=>navigation.navigate('profileItem',{id:profile._id})}>
+                        <TouchableOpacity key={index} onPress={()=>hotelId(profile._id,() => navigation.navigate('Hotel Profile'))}>
                             <View style={styles.container}>
                                 <Image source={{uri:profile.profilepicture}} style={{width:80, height:65}}/>
                                 <View style={styles.text}>
@@ -112,4 +114,4 @@ const mapStateToProps =(state) => {
     }
 }
 
-export default connect(mapStateToProps, {getAllProfiles})(Profile);
+export default connect(mapStateToProps, {getAllProfiles, hotelId})(Profile);

@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
 import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
@@ -16,37 +17,80 @@ import AllItems from './src/components/allProfiles/profile';
 import reducers from './src/reducers';
 import ResolveAuthScreen from './src/ResolveAuthScreen';
 import LogOut from './src/components/Auth/LogOut';
-import ProfileItem from './src/components/allProfiles/profileItem';
+import AboutUsHotel from './src/components/allProfiles/AboutUsHotel';
+import Rooms from './src/components/allProfiles/Rooms';
+import Restuarant from './src/components/allProfiles/Restuarant';
+import PhotoViewer from './src/components/allProfiles/PhotoViewer';
+import Halls from './src/components/allProfiles/Halls';
+import EditProfile from './src/components/dashboard/EditProfile';
+import ShowRooms from './src/components/dashboard/ShowRooms';
+import ShowFoods from './src/components/dashboard/ShowFoods';
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
+const TopTabs = createMaterialTopTabNavigator();
 
-//Stack for hotel profile
-const hotelProfile = () => {
+const AllItemsHeader= () => {
+  return <Stack.Navigator screenOptions={{headerStyle:{backgroundColor:'#30BBB2'}}}>
+    <Stack.Screen name="AllItems" component={AllItems}/>
+  </Stack.Navigator>
+}
+
+const MyProfileItems = () => {
   return (
     <Stack.Navigator screenOptions={{headerStyle:{backgroundColor:'#30BBB2'}}}>
-      <Stack.Screen name="all profiles" component={AllItems}/>
-      <Stack.Screen  name="profileItem" component={ProfileItem}/>
+      <Stack.Screen name="MyProfile" component={MyProfile}/>
+      <Stack.Screen name="EditProfile" component={EditProfile}/>
+      <Stack.Screen name="ShowRooms" component={ShowRooms}/>
+      <Stack.Screen name="ShowFoods" component={ShowFoods}/>
+    </Stack.Navigator>
+  )
+}
+
+const Room = () => {
+  return (
+    <Stack.Navigator screenOptions={{headerShown:false}}>
+      <Stack.Screen name ="rooms" component={Rooms}/>
+      <Stack.Screen name="imageViewer" component={PhotoViewer}/>
     </Stack.Navigator>
   );
 }
 
-//*Set the header for ottom tab navigator
-// const xxx = () => {
-//   return (
-//     <Stack.Navigator>
-//       <Stack.Screen 
-//         name="HomeFlow" 
-//         component={HomeFlow}
-//         options={{
-//           headerStyle:{backgroundColor:'#30BBB2'}
-//         }}
-//       />
-//     </Stack.Navigator>
-//   )
-// }
+const Food = () => {
+  return (
+    <Stack.Navigator screenOptions={{headerShown:false}}>
+      <Stack.Screen name ="foods" component={Restuarant}/>
+      <Stack.Screen name="imageViewer" component={PhotoViewer}/>
+    </Stack.Navigator>
+  );
+}
 
-const HomeFlow = () => {
+const Hall = () => {
+  return (
+    <Stack.Navigator screenOptions={{headerShown:false}}>
+      <Stack.Screen name ="halls" component={Halls}/>
+      <Stack.Screen name="imageViewer" component={PhotoViewer}/>
+    </Stack.Navigator>
+  );
+}
+
+const HotelProfileTopTabs = () => {
+  return (
+    <TopTabs.Navigator tabBarOptions={{
+      activeTintColor:'#30BBB2',
+      inactiveTintColor:'grey'
+    }}>
+      <TopTabs.Screen name="Aboutus" component={AboutUsHotel}/>
+      <TopTabs.Screen name="Rooms" component={Room}/>
+      <TopTabs.Screen name="Foods" component={Food}/>
+      <TopTabs.Screen name="Halls" component={Hall}/>
+    </TopTabs.Navigator>
+  );
+}
+
+
+
+const BottomTab = () => {
   return (
     <Tabs.Navigator screenOptions={({route})=> ({
       tabBarIcon:({color, size})=>{
@@ -66,8 +110,8 @@ const HomeFlow = () => {
       inactiveTintColor:'grey'
     }}
     >
-      <Tabs.Screen name="profiles" component={hotelProfile}/>
-      <Tabs.Screen name="My Profile" component={MyProfile}/>
+      <Tabs.Screen name="profiles" component={AllItemsHeader}/>
+      <Tabs.Screen name="My Profile" component={MyProfileItems}/>
       <Tabs.Screen name="Log Out" component={LogOut}/>
     </Tabs.Navigator>
   );
@@ -78,6 +122,15 @@ const LoginFlow = () => {
   <Stack.Navigator screenOptions={{headerStyle:{backgroundColor:'#30BBB2'}}}>
       <Stack.Screen name="Login Page" component={Login}/>
       <Stack.Screen name="Register Page" component={Register}/>
+    </Stack.Navigator>
+  );
+}
+
+const HomeFlow = () => {
+  return (
+    <Stack.Navigator >
+      <Stack.Screen options={{headerShown:false}} name="All Profiles" component={BottomTab}/>
+      <Stack.Screen options={{headerStyle:{backgroundColor:'#30BBB2'}}} name="Hotel Profile" component={HotelProfileTopTabs}/>
     </Stack.Navigator>
   );
 }
