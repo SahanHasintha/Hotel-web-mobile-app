@@ -3,8 +3,29 @@ import {setAlert} from './Alert';
 import {
     ALL_PROFILES, 
     PROFILE_ERROR,
-    GET_PROFILE
+    GET_PROFILE,
+    GET_MYPROFILE
 } from './types';
+
+
+//!Create Profile
+export const createProfile = (formData) =>async dispatch =>{
+    try {
+        const res = await Axios.post('/api/profile', formData);
+        dispatch({
+            type:GET_PROFILE,
+            payload:res.data
+        })
+    } catch (error) {
+        const errors = error.response.data.errors;
+        if(errors){
+            errors.map(err => {
+                dispatch(setAlert(err.msg));
+            })
+        }
+    }
+}
+
 
 //!Get all profile
 export const getAllProfiles = () =>async (dispatch) => {
@@ -43,7 +64,7 @@ export const getMyProfile = () => async dispatch => {
     try {
         const res = await Axios.get('/api/profile/myProfile');
         dispatch({
-            type:GET_PROFILE,
+            type:GET_MYPROFILE,
             payload:res.data
         })
     } catch (error) {
@@ -72,11 +93,24 @@ export const editMyProfile = (formData , callback) => async dispatch => {
     }
 }
 
+//!Remove the room
 export const removeRoom = (id, callback) => async dispatch => {
     try {
-        Axios.delete(`/api/profile/rooms/${id}`);
+        await Axios.delete(`/api/profile/rooms/${id}`);
         callback();
     } catch (err) {
         console.log(err.message);
     }
 }
+
+//!Remove the food
+export const removeFood = (id, callback) => async dispatch =>{
+    try {
+        await Axios.delete(`/api/profile/restuarant/${id}`);
+        callback();
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
+//!Add rooms to profile

@@ -4,16 +4,21 @@ import {Card} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {AntDesign} from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/native';
-import {removeRoom} from '../../actions/profile';
+import {removeRoom, getMyProfile} from '../../actions/profile';
 
-const ShowRooms = ({profile:{profile, loading}, removeRoom}) => {
+const ShowRooms = ({profile:{myFrofile, loading}, removeRoom, getMyProfile}) => {
     const navigation = useNavigation();
-    return (<Card title={"Rooms"}>
-        {!loading ?  profile.rooms.map((room, index) => {
+    useEffect(()=>{
+        getMyProfile();
+    },[])
+
+    return (
+    <Card title={"Rooms"}>
+        {!loading ?  myFrofile.rooms.map((room, index) => {
                     return (
                         <View style={styles.mainContainer} key={index}>
                             <View style={styles.container}>
-                                <Image source={{uri:room.images[0]}} style={{width:80, height:65}}/>
+                                <Image source={{uri:room.images[0]}} style={{width:80, height:65, marginRight:10}}/>
                                 <View>
                                     <Text style={styles.header}>{room.price}</Text>
                                     <Text style={styles.subHeader}>{room.category}</Text>
@@ -70,4 +75,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {removeRoom})(ShowRooms);
+export default connect(mapStateToProps, {removeRoom, getMyProfile})(ShowRooms);

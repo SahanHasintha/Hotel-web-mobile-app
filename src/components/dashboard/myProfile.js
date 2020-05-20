@@ -8,30 +8,35 @@ import LoadingGif from '../layouts/loadinsGif';
 
 
 const {width, height} = Dimensions.get('window');
-const MyProfile = ({getMyProfile, profile:{loading,profile}}) => {
+const MyProfile = ({getMyProfile, profile:{loading,myFrofile}}) => {
+
     const navigation = useNavigation()
+
     useEffect(()=>{
         getMyProfile();
     },[])
+
+
     return (
         <View>
             {loading ? 
                 <LoadingGif/> :  
-                profile ===null ? 
-                <Text>Create profile</Text> :
-                <Card title={profile.name} >
+                myFrofile ===null ? 
+                <Button type="outline" title="Create Profile" onPress={()=>navigation.navigate('CreateProfile')} /> :
+                <Card title={myFrofile.name} >
                     <Avatar
-                        source={{uri:profile.profilepicture}}
+                        source={{uri:myFrofile.profilepicture}}
                         showAccessory
                         style={styles.image}
                         onPress={() => console.log("Works!")}
                     />
                     <Button type="outline" title="Edit profile" onPress={()=> navigation.navigate('EditProfile')} />
                     <Button type="outline" title="Show Rooms" onPress={()=> navigation.navigate('ShowRooms')}/>
-                    <Button type="outline" title="Update Rooms"/>
-                    <Button type="outline" title="Show Foods"/>
+                    <Button type="outline" title="Update Rooms" onPress={()=> navigation.navigate('AddRoom')}/>
+                    <Button type="outline" title="Show Foods"  onPress ={()=> navigation.navigate('ShowFoods')}/>
                     <Button type="outline" title="Update Foods"/>
-                    <Button type="outline" title="Show Halls"/>
+                    <Button type="outline" title="Show Halls" onPress={()=>navigation.navigate('ShowHalls')}/>
+                    <Button type="outline" title="Add Halls" onPress={()=>navigation.navigate('AddHalls')}/>
                 </Card>
             }
         </View>
@@ -56,4 +61,4 @@ const mapStateToProps=(state) => {
     }
 }
 
-export default connect(mapStateToProps, {getMyProfile})(MyProfile);
+export default connect(mapStateToProps,{getMyProfile})(MyProfile);

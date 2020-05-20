@@ -6,7 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import TextArea from 'react-native-textarea';
 import {editMyProfile} from '../../actions/profile';
 
-const MyProfile = ({profile:{profile, loading}, editMyProfile}) => {
+const MyProfile = ({profile:{myFrofile, loading}, editMyProfile}) => {
     const navigation = useNavigation();
     const [formData, setFormData] = useState({
         name:'',
@@ -21,19 +21,19 @@ const MyProfile = ({profile:{profile, loading}, editMyProfile}) => {
     
     useEffect(()=>{
         let str = ''
-        if(profile.description){
-            profile.description.forEach(element =>{
+        if(myFrofile.description){
+            myFrofile.description.forEach(element =>{
                 str +=  element +"."
             })
         }
 
         !loading && setFormData({
-            name: !loading || profile.name !==null ? profile.name :'',
-            address: !loading || profile.address !== null ? profile.address : '',
-            popularcity: !loading || profile.popularcity !== null ? profile.popularcity : '',
-            todaybestoffer: !loading || profile.todaybestoffer !== null ? profile.todaybestoffer : '',
-            phonenumber: !loading || profile.phonenumber !== null ? profile.phonenumber : '',
-            description: !loading || profile.description !== null ? str : '',
+            name: !loading || myFrofile.name !==null ? myFrofile.name :'',
+            address: !loading || myFrofile.address !== null ? myFrofile.address : '',
+            popularcity: !loading || myFrofile.popularcity !== null ? myFrofile.popularcity : '',
+            todaybestoffer: !loading || myFrofile.todaybestoffer !== null ? myFrofile.todaybestoffer : '',
+            phonenumber: !loading || myFrofile.phonenumber !== null ? myFrofile.phonenumber : '',
+            description: !loading || myFrofile.description !== null ? str : '',
         })
     },[]) 
 

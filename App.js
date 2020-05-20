@@ -25,6 +25,10 @@ import Halls from './src/components/allProfiles/Halls';
 import EditProfile from './src/components/dashboard/EditProfile';
 import ShowRooms from './src/components/dashboard/ShowRooms';
 import ShowFoods from './src/components/dashboard/ShowFoods';
+import ShowHalls from './src/components/dashboard/showHalls';
+import AddHalls from './src/components/dashboard/addHalls';
+import CreateProfile from './src/components/dashboard/createProfile';
+import AddRooms from './src/components/dashboard/addRooms';
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -40,9 +44,13 @@ const MyProfileItems = () => {
   return (
     <Stack.Navigator screenOptions={{headerStyle:{backgroundColor:'#30BBB2'}}}>
       <Stack.Screen name="MyProfile" component={MyProfile}/>
+      <Stack.Screen name="CreateProfile" component={CreateProfile}/>
       <Stack.Screen name="EditProfile" component={EditProfile}/>
       <Stack.Screen name="ShowRooms" component={ShowRooms}/>
       <Stack.Screen name="ShowFoods" component={ShowFoods}/>
+      <Stack.Screen name="ShowHalls" component={ShowHalls}/>
+      <Stack.Screen name="AddHalls" component={AddHalls}/>
+      <Stack.Screen name="AddRoom" component={AddRooms}/>
     </Stack.Navigator>
   )
 }
