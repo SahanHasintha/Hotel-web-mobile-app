@@ -44,7 +44,7 @@ const CreateProfile = ({createProfile}) => {
 
         const ref = firebase.storage().ref().child('images/'+image);
         const snapshot = await ref.put(blob);
-        snapshot.ref.getDownloadURL().then( async (downloadUrl)=>{
+        snapshot.ref.getDownloadURL().then((downloadUrl)=>{
             if(downloadUrl){
                 console.log(downloadUrl);
                 const obj = {...formData, profilepicture:downloadUrl};

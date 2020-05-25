@@ -14,6 +14,7 @@ export const logOut = (callback) => async dispatch => {
 export const TryLocalLogin = (callback01, callback02) =>async dispatch => {
     const token =await AsyncStorage.getItem('token');
         if(token){
+            console.log(token)
             setAuthToken(token);
             callback01();
         }else{
